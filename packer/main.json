@@ -2,16 +2,23 @@
     "variables": {
         "azure-resource-group": "{{env `TF_VAR_AZURE_PACKER_RESOURCE_GROUP`}}",
         "azure-region": "{{env `TF_VAR_AZURE_REGION`}}",
-        "dc01-vm-size": "{{env `TF_VAR_DC01_VM_SIZE`}}",
-        "dc01-managed-machine-name": "{{env `TF_VAR_DC01_MANAGED_IMAGE_NAME`}}",
         "azure-tenant-id": "{{env `AZURE_TENANT_ID`}}",
         "azure-client-id": "{{env `AZURE_CLIENT_ID`}}",
         "azure-subscription-id": "{{env `AZURE_SUBSCRIPTION_ID`}}",
         "azure-client-secret": "{{env `AZURE_CLIENT_SECRET`}}",
         "dc01-admin-username": "{{env `TF_VAR_DC01_ADMIN_USERNAME`}}",
         "dc01-admin-password": "{{env `TF_VAR_DC01_ADMIN_PASSWORD`}}",
-        "dc902-forest-domain": "DC902.local",
+        "dc01-vm-size": "{{env `TF_VAR_DC01_VM_SIZE`}}",
+        "dc01-managed-machine-name": "{{env `TF_VAR_DC01_MANAGED_IMAGE_NAME`}}",
         "dc01-netbios-name": "DC902",
+        "dc902-user1-password": "{{env `DC902_USER1_PASSWORD`}}",
+        "dc902-user2-password": "{{env `DC902_USER2_PASSWORD`}}",
+        "dc902-user3-password": "{{env `DC902_USER3_PASSWORD`}}",
+        "dc902-user4-password": "{{env `DC902_USER4_PASSWORD`}}",
+        "dc902-user5-password": "{{env `DC902_USER5_PASSWORD`}}",
+        "dc902-user6-password": "{{env `DC902_USER6_PASSWORD`}}",
+        "dc902-user7-password": "{{env `DC902_USER7_PASSWORD`}}",
+        "dc902-forest-domain": "DC902.local",
         "dc902-domain-mode": "7",
         "dc902-forest-mode": "7"
     },
@@ -76,7 +83,14 @@
             "pause_before": "10m",
 
             "environment_vars": [
-                "DC902_FORESTDOMAIN={{user `dc902-forest-domain`}}"
+                "DC902_FORESTDOMAIN={{user `dc902-forest-domain`}}",
+                "DC902_USER1_PASSWORD={{user `dc902-user1-password`}}",
+                "DC902_USER2_PASSWORD={{user `dc902-user2-password`}}",
+                "DC902_USER3_PASSWORD={{user `dc902-user3-password`}}",
+                "DC902_USER4_PASSWORD={{user `dc902-user4-password`}}",
+                "DC902_USER5_PASSWORD={{user `dc902-user5-password`}}",
+                "DC902_USER6_PASSWORD={{user `dc902-user6-password`}}",
+                "DC902_USER7_PASSWORD={{user `dc902-user7-password`}}"
             ],
 
             "scripts": [

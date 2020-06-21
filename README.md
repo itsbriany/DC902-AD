@@ -35,6 +35,7 @@ In `environment.ps1`/`environment.sh`, you will want to configure all variables 
 1. Go to the `PROJECT_ROOT/packer` directory
 2. Run `terraform apply`, confirm there are no errors. You will notice all the changes that will occur in the environment. If you are comfortable with that, enter `yes`.
 3. If all went well, you should see no errors.
+4. Go to the azure management console and find the IP of the DC01 VM. You should be able to connect with RDP or WinRM.
 
 ### Building the DC01 Virtual Machine Image
 
@@ -70,7 +71,9 @@ If any issues occur, you should be able to clean up the resources manually via t
   * Check the `TF_VAR_WHITELISTED_CIDR` environment variable in `environment.ps1`/`environment.sh` to ensure that the CIDR range holds your **public** IP address. E.g `100.100.100.100/32` is a valid CIDR range that only accepts the `100.100.100.100` IP address.
   * Your virtual machine image may still be booting. Give it a couple more minutes and try reconnecting.
 * My environment won't tear down. I get some error involving azure network interfaces... heeelp!!!
-  * Unfortunately, the DC01 virtual machine depends on a network interface card. Azure then refuses to delete the network interface BEFORE the DC01 virtual machine, resulting in the error. TL;DR go delete the DC01 virtual machine with 
+  * Unfortunately, the DC01 virtual machine depends on a network interface card. Azure then refuses to delete the network interface BEFORE the DC01 virtual machine, resulting in the error. TL;DR go the azure management console, delete the DC01 VM manually and then run `terraform destroy`.
+* I'm getting an erro like: `Error getting authenticated object ID` when using terraform. How can I fix this?
+  * Try authenticating into azure with the azure CLI: `az login`, then try again.
 
 ## Appendix
 

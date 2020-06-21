@@ -2,10 +2,6 @@
 # https://docs.microsoft.com/en-us/powershell/module/dfsn
 Write-Host "Enabling Active Directory Features..."
 Install-WindowsFeature -Name "AD-Domain-Services" -IncludeManagementTools
-Write-Host "Enabling active directory DFS replication..."
-Install-WindowsFeature "FS-DFS-Replication"
-Write-Host "Enabling active directory DFS namespaces..."
-Install-WindowsFeature "FS-DFS-Namespace"
 
 Write-Host "Upgrading the server to a domain controller..."
 $password = ConvertTo-SecureString $env:DC01_ADMINPASS -AsPlaintext -Force
