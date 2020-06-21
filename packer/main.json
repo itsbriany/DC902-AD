@@ -1,0 +1,90 @@
+{
+    "variables": {
+        "azure-resource-group": "{{env `TF_VAR_AZURE_PACKER_RESOURCE_GROUP`}}",
+        "azure-region": "{{env `TF_VAR_AZURE_REGION`}}",
+        "dc01-vm-size": "{{env `TF_VAR_DC01_VM_SIZE`}}",
+        "dc01-managed-machine-name": "{{env `TF_VAR_DC01_MANAGED_IMAGE_NAME`}}",
+        "azure-tenant-id": "{{env `AZURE_TENANT_ID`}}",
+        "azure-client-id": "{{env `AZURE_CLIENT_ID`}}",
+        "azure-subscription-id": "{{env `AZURE_SUBSCRIPTION_ID`}}",
+        "azure-client-secret": "{{env `AZURE_CLIENT_SECRET`}}",
+        "dc01-admin-username": "{{env `TF_VAR_DC01_ADMIN_USERNAME`}}",
+        "dc01-admin-password": "{{env `TF_VAR_DC01_ADMIN_PASSWORD`}}",
+        "dc902-forest-domain": "DC902.local",
+        "dc01-netbios-name": "DC902",
+        "dc902-domain-mode": "7",
+        "dc902-forest-mode": "7"
+    },
+
+    "builders": [
+        {
+            "type": "azure-arm",
+        
+            "client_id": "{{user `azure-client-id`}}",
+            "client_secret": "{{user `azure-client-secret`}}",
+            "tenant_id": "{{user `azure-tenant-id`}}",
+            "subscription_id": "{{user `azure-subscription-id`}}",
+            
+            "managed_image_resource_group_name": "{{user `azure-resource-group`}}",
+            "managed_image_name": "{{user `dc01-managed-machine-name`}}",
+            
+            "os_type": "Windows",
+            "image_publisher": "MicrosoftWindowsServer",
+            "image_offer": "WindowsServer",
+            "image_sku": "2019-Datacenter",
+            
+            "communicator": "winrm",
+            "winrm_use_ssl": true,
+            "winrm_insecure": true,
+            "winrm_timeout": "10m",
+            "winrm_username": "{{user `dc01-admin-username`}}",
+            "winrm_password": "{{user `dc01-admin-password`}}",
+            
+            "location": "{{user `azure-region`}}",
+            "vm_size": "{{user `dc01-vm-size`}}"
+        }
+    ],
+
+    "provisioners": [
+        {
+            "type": "powershell",
+            "scripts": [
+                "remove-windows-defender.ps1"
+            ]
+        },
+        {
+            "type": "windows-restart"
+        },
+        {
+            "type": "powershell",
+
+            "environment_vars": [
+                "DC01_ADMINUSER={{user `dc01-admin-username`}}",
+                "DC01_ADMINPASS={{user `dc01-admin-password`}}",
+                "DC902_FORESTDOMAIN={{user `dc902-forest-domain`}}",
+                "DC01_NETBIOSNAME={{user `dc01-netbios-name`}}",
+                "DC902_DOMAINMODE={{user `dc902-domain-mode`}}",
+                "DC902_FORESTMODE={{user `dc902-forest-mode`}}"
+            ],
+
+            "scripts": [
+                "ad-features.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "pause_before": "10m",
+
+            "environment_vars": [
+                "DC902_FORESTDOMAIN={{user `dc902-forest-domain`}}"
+            ],
+
+            "scripts": [
+                "host-firewall.ps1",
+                "insecure-winrm.ps1",
+                "ad-users.ps1"
+            ]
+        }
+    ]
+  }
+  

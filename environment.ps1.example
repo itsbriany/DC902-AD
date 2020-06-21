@@ -1,0 +1,16 @@
+# All variables prefixes with TF_VAR may be shared with terraform
+$Env:TF_VAR_AZURE_RESOURCE_GROUP = "dc902_rg"
+$Env:TF_VAR_AZURE_PACKER_RESOURCE_GROUP = "dc902_packer_rg"
+$Env:TF_VAR_AZURE_REGION = "Canada East"
+$Env:TF_VAR_DC01_VM_SIZE = "Standard_DS2_v2"
+$Env:TF_VAR_DC01_MANAGED_IMAGE_NAME = "DC902-DC01-Windows-Server-2008-R2-SP1"
+$Env:TF_VAR_WHITELISTED_CIDR = "CHANGE_ME/32"
+$Env:TF_VAR_DC01_ADMIN_USERNAME = "deployer"
+$Env:TF_VAR_DC01_ADMIN_PASSWORD = "CHAMGE_ME"
+
+# Packer related variables
+$Env:AZURE_SUBSCRIPTION_ID = "CHANGE_ME"
+$Env:AZURE_CLIENT_ID = "CHANGE_ME"
+$Env:AZURE_CLIENT_SECRET = "CHANGE_ME"
+$Env:AZURE_TENANT_ID = "CHANGE_ME"
+$Env:PACKER_RESOURCE_GROUP = "dc902_packer_rg"
