@@ -1,5 +1,9 @@
 # DC 902 Active Directory Environment
 
+Azure infrastructure automation using Terraform, Packer and PowerShell to provision an ephemeral Windows Active Directory training environment.
+
+**Historical project (2020):** Current compatibility with Azure providers, Packer and Terraform is unverified. The image deliberately weakens some security controls for a controlled lab. It is not a secure enterprise baseline. Review the allowed source CIDR, provisioning order, costs and teardown procedures before deploying.
+
 ## Prerequisites
 
 ### Context
